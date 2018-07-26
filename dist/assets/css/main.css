@@ -4,7 +4,7 @@ h1 {
 
 #menu ul {
   list-style: none;
-  padding: 0;
+  padding: 1;
   margin: 0; }
   #menu ul li {
     float: right;
@@ -12,7 +12,7 @@ h1 {
     line-height: 47px; }
 
 #dashboard .idea .panel {
-  background-color: #fafafb;
+  background-color: "#000";
   padding: 6px;
   font-family: 'Gaegu', 'helvetica', sans-serif;
   font-size: 18px;
@@ -36,7 +36,7 @@ h1 {
   width: 100%;
   border-radius: 4px;
   border-color: #cccccc;
-  background-color: #fafafb;
+  background-color: "#000";
   outline: none;
   padding: 4px;
   height: 100px;

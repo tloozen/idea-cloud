@@ -3,10 +3,11 @@ h1 {
     font-size: 100%;
 }
 
+$lightColor: "#000";
 #menu {
     ul {
         list-style: none;
-        padding: 0;
+        padding: 1;
         margin: 0;
         li {
             float: right;
@@ -17,7 +18,7 @@ h1 {
 }
 
 #dashboard .idea .panel {
-    background-color: #fafafb;
+    background-color: $lightColor;
     padding: 6px;
     font-family: 'Gaegu', 'helvetica', sans-serif;
     font-size: 18px;
@@ -49,7 +50,7 @@ h1 {
         width: 100%;
         border-radius: 4px;
         border-color: #cccccc;
-        background-color: #fafafb;
+        background-color: $lightColor;
         outline: none;
         padding: 4px;
         height: 100px;
