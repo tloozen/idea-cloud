@@ -159,7 +159,6 @@ function calculate(status, estimation, a1, a2, a3, a4, precompte) {
 			};
 		};
     }());
-console.log()
     var resC15 = (function() {
     	return ((estimation - precompte) * tauxMajCie) - resC14; 
     }());
@@ -222,6 +221,13 @@ console.log()
             c23: resC23
         },
     };
+
+      // reset calculation
+      if (document.querySelector('.result-block').style.display === "block") {
+        var resetCalculation = document.querySelector('.reset_button');
+        resetCalculation.addEventListener('click', alert('fff'));
+      }
+    
 };
 
 function resetForm() {
@@ -231,14 +237,14 @@ function resetForm() {
 };
 
 function setValuetoZero() {
+    document.getElementById('profile_1').checked = true;
     document.getElementById('profile_1').checked = false;
-    document.getElementById('profile_1').checked = false;
-    estimation = 0;
+    document.getElementById('estimatePayTax').value = 0;
     a1 = 0;
     a2 = 0;
     a3 = 0;
     a4 = 0;
-    precompte = 0;
+    document.getElementById('duties').value = 0;
 };
 
 function hideErrors() {
@@ -255,74 +261,58 @@ function hideResultBlock() {
 // --------------------------- FRONT END ------------------------------------
 // --------------------------------------------------------------------------
 
-    var resultBlock= document.querySelector('.result-block');
-    resultBlock.style.display = 'none';
-
-	var form = document.querySelector('.form-calculate');
-	form.addEventListener('submit', function submitForm(e){ 
-		e.preventDefault ? e.preventDefault() : (e.returnValue = false);		
-		var statusErrorMessage = document.querySelector('.error');
-        var precompteErrorMessage = document.querySelector('.error3');
-        var estimationErrorMessage = document.querySelector('.error2');
-	// Status
-	if(!document.getElementById('profile_1').checked && !document.getElementById('profile_2').checked) {
-		statusErrorMessage.style.display = "block";
-	} else {
-		statusErrorMessage.style.display = "none";
-    };
+    var resultBlock = document.querySelector('.result-block');
+    resultBlock.style.display = 'none';		
+    var statusErrorMessage = document.querySelector('.error');
+    statusErrorMessage.style.display = 'none';
+    var precompteErrorMessage = document.querySelector('.error3');
+    precompteErrorMessage.style.display = 'none';
     
-    // estimation
-    if(estimation > 0) {
-        estimationErrorMessage.style.display = 'none';
-    } else { 
-        estimationErrorMessage.style.display = 'block';
-    };
+    document.getElementById('profile_1').checked = true;
 
-    // Duties DO WE NEED A CHECK?
-	//precompteErrorMessage.style.display = "none";
+    var form = document.querySelector('.form-calculate');
+    form.addEventListener('submit', function submitForm(e){ 
+        e.preventDefault ? e.preventDefault() : (e.returnValue = false);
 
-
-	if (statusErrorMessage.style.display === "none" && estimationErrorMessage.style.display === 'none') {
-		errors = false;
-	} else {
-		errors = true;
-	}
-		if (!errors) {
-			// Get Values
-			if (document.getElementById('profile_1').checked) { 
-				status = "selfEmployed";
-			} else { 
-				status = "companies"
-			}
-			estimation = Number(document.getElementById('estimatePayTax').value);
-			a1 = Number(document.getElementById('needPay_1').value);
-			a2 = Number(document.getElementById('needPay_2').value);
-			a3 = Number(document.getElementById('needPay_3').value);
-			a4 = Number(document.getElementById('needPay_4').value);
-			precompte =  Number(document.getElementById('duties').value);
-
-			// Get calculation results;
-			results = calculate(status, estimation, a1, a2, a3, a4, precompte);
-
-			// Show result div
-			document.querySelector('.result-block').style.display = "block";
-			if (results.status === "selfEmployed") { 
-				document.getElementById('result_1').innerHTML = results.selfEmployed.b13;
-				document.getElementById('result_2').innerHTML = results.selfEmployed.b14;
-				document.getElementById('result_4').innerHTML = results.selfEmployed.b22;
-				document.getElementById('result_5').innerHTML = results.selfEmployed.b23;
-				// to write
-			} else { 
-				// to write
-				document.getElementById('result_1').innerHTML = results.companies.c13;
-				document.getElementById('result_2').innerHTML = results.companies.c14;
-				document.getElementById('result_4').innerHTML = results.companies.c22;
-				document.getElementById('result_5').innerHTML = results.companies.c23;
+        estimation = Number(document.getElementById('estimatePayTax').value);
+        var estimationErrorMessage = document.querySelector('.error2');
+        if(estimation > 0) {
+            estimationErrorMessage.style.display = 'none';
+            document.querySelector('.result-block').style.display = "block";
+            // Get Values
+            if (document.getElementById('profile_1').checked) { 
+                status = "selfEmployed";
+            } else { 
+                status = "companies"
             }
-            
-            // reset calculation
-            var resetCalculation = document.querySelector('.reset_button');
-            resetCalculation.addEventListener('click', resetForm());
+            a1 = Number(document.getElementById('needPay_1').value);
+            a2 = Number(document.getElementById('needPay_2').value);
+            a3 = Number(document.getElementById('needPay_3').value);
+            a4 = Number(document.getElementById('needPay_4').value);
+            precompte =  Number(document.getElementById('duties').value);
 
-		}
-	});
+            results = calculate(status, estimation, a1, a2, a3, a4, precompte);
+                // Show result div
+                if (results.status === "selfEmployed") { 
+                    document.getElementById('result_1').innerHTML = results.selfEmployed.b13;
+                    document.getElementById('result_2').innerHTML = results.selfEmployed.b14;
+                    document.getElementById('result_4').innerHTML = results.selfEmployed.b22;
+                    document.getElementById('result_5').innerHTML = results.selfEmployed.b23;
+                    // to write
+                } else { 
+                    // to write
+                    document.getElementById('result_1').innerHTML = results.companies.c13;
+                    document.getElementById('result_2').innerHTML = results.companies.c14;
+                    document.getElementById('result_4').innerHTML = results.companies.c22;
+                    document.getElementById('result_5').innerHTML = results.companies.c23;
+                };
+
+        }
+
+        else {
+            estimationErrorMessage.style.display = 'block';
+        }
+    
+    });
+
+       
